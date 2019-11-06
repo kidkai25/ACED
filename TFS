@@ -1,0 +1,16 @@
+public class Solution {
+        public bool IsSelfDivisible(int n)
+        {
+            foreach (char c in n.ToString())
+                if (c == '0' || n % (c - '0') != 0) return false;
+            return true;
+        }
+
+        public IList<int> SelfDividingNumbers(int left, int right)
+        {
+            var ret = new List<int>();
+            for (; left <= right; left++)
+                if (IsSelfDivisible(left)) ret.Add(left); 
+            return ret;
+        }
+}
