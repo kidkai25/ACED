@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AsynchronousExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+        }
+
+        public async Task DoSomethingAsync()
+        {
+
+            await Task.Delay(1000); //await is a unary operator that takes in an 'awaitable' (an asynchronous operation)
+                                    //await examines that awaitable to see if it has already been completed
+                                    //if not completed it tells the the awaitble to run remainder of the method and then return from the async method.
+                                    //later on when awaitable executes it will run remainder of the method.
+        }
+    }
+}
