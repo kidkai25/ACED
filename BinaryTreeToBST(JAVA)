@@ -1,0 +1,152 @@
+{
+// INITIAL CODE
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+import java.util.Arrays;
+// A Binary Tree node
+class Node
+{
+    int data;
+    Node left, right;
+    Node(int item)
+    {
+        data = item;
+        left = right = null;
+    }
+}
+class Binary_Tree_TO_BST
+{
+	void inOrder(Node node) 
+	{
+        if (node == null) {
+            return;
+        }
+ 
+        inOrder(node.left);
+        System.out.print(node.data + " ");
+ 
+        inOrder(node.right);
+    }
+	
+    // driver function to test the above functions
+    public static void main(String args[])
+    {
+        // Input the number of test cases you want to run
+        Scanner sc = new Scanner(System.in);
+		Binary_Tree_TO_BST mt1 = new Binary_Tree_TO_BST();
+	
+        int t = sc.nextInt();
+        while (t > 0)
+        {
+            
+            int k1 = sc.nextInt();
+		
+            HashMap<Integer, Node> m = new HashMap<Integer, Node> ();
+			Node root1 = null;
+			while (k1 > 0)
+            {
+                int n1 = sc.nextInt();
+                int n2 = sc.nextInt();
+                char lr = sc.next().charAt(0);
+                //  cout << n1 << " " << n2 << " " << (char)lr << endl;
+                Node parent1 = m.get(n1);
+                if (parent1 == null)
+                {
+                    parent1 = new Node(n1);
+                    m.put(n1, parent1);
+                    if (root1 == null)
+                        root1 = parent1;
+                }
+                Node child1 = new Node(n2);
+                if (lr == 'L')
+                    parent1.left = child1;
+                else
+                    parent1.right = child1;
+                m.put(n2, child1);
+                k1--;
+            }
+			
+			
+            GfG g = new GfG();
+            Node rootA = g. binaryTreeToBST(root1);
+			mt1.inOrder(rootA);
+			System.out.println();
+            t--;
+        }
+    }
+}
+
+}
+/*This is a function problem.You only need to complete the function given below*/
+/*Structure of the node class is
+class Node
+{
+    int data;
+    Node left, right;
+    Node(int item){
+        data = item;
+        left = right = null;
+    }
+} */
+class GfG
+{
+     static ArrayList<Integer> treeList;
+     static int index = 0;
+    /* You are required to complete below method */
+    Node binaryTreeToBST(Node root)
+    {
+	   treeList = new ArrayList<Integer>();
+            //Fill List
+            treeList = convertBTtoList(root);
+
+            //CurrentList items
+           // treeList.ForEach(Console.WriteLine);
+//
+            //Sorting the list
+            Collections.sort(treeList);
+
+            //Convert sorted to list to bst
+            //Create BST
+            Node R = createBst(root);
+           treeList.clear();
+           index = 0;
+            return R;
+    }
+    
+     static ArrayList<Integer> convertBTtoList(Node root)
+        {
+
+            if(root == null)
+            {
+               
+                return null;
+            }
+            else
+            {
+                if (root.left != null)
+                    convertBTtoList(root.left);
+                treeList.add(root.data);
+                if (root.right != null)
+                    convertBTtoList(root.right);
+            }
+            return treeList;
+        }
+        
+          static Node createBst(Node root)
+        {
+            if (root == null)
+                return null;
+            else
+            {
+                if (root.left != null)
+                    createBst(root.left);
+                root.data = treeList.get(index);
+                index++;
+                if (root.right != null)
+                    createBst(root.right);
+            }
+
+            return root;
+        }
+}
