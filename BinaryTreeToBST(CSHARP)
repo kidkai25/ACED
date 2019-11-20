@@ -1,0 +1,168 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace gt
+{
+    public class Program
+    {
+        //Represent a node of binary tree  
+        public class Node<T>
+        {
+            public T data;
+            public Node<T> left;
+            public Node<T> right;
+
+            public Node(T data)
+            {
+                //Assign data to the new node, set left and right children to null  
+                this.data = data;
+                this.left = null;
+                this.right = null;
+            }
+        }
+
+        public class ConvertBTtoBST<T>
+        {
+            //Represent the root of binary tree  
+            public Node<T> root;
+
+            T[] treeArray;
+            int index = 0;
+
+            public ConvertBTtoBST()
+            {
+                root = null;
+            }
+
+            //convertBTBST() will convert a binary tree to binary search tree  
+            public Node<T> convertBTBST(Node<T> node)
+            {
+
+                //Variable treeSize will hold size of tree  
+                int treeSize = calculateSize(node);
+                treeArray = new T[treeSize];
+
+                //Converts binary tree to array  
+                convertBTtoArray(node);
+
+                //Sort treeArray  
+                Array.Sort(treeArray);
+
+                //Converts array to binary search tree  
+                Node<T> d = createBST(0, treeArray.Length - 1);
+                return d;
+            }
+
+            //calculateSize() will calculate size of tree  
+            int calculateSize(Node<T> node)
+            {
+                int size = 0;
+                if (node == null)
+                    return 0;
+                else
+                {
+                    size = calculateSize(node.left) + calculateSize(node.right) + 1;
+                    return size;
+                }
+            }
+
+            //convertBTtoArray() will convert the given binary tree to its corresponding array representation  
+            public void convertBTtoArray(Node<T> node)
+            {
+                //Check whether tree is empty  
+                if (root == null)
+                {
+                    Console.WriteLine("Tree is empty");
+                    return;
+                }
+                else
+                {
+                    if (node.left != null)
+                        convertBTtoArray(node.left);
+                    //Adds nodes of binary tree to treeArray  
+                    treeArray[index] = node.data;
+                    index++;
+                    if (node.right != null)
+                        convertBTtoArray(node.right);
+                }
+            }
+
+            //createBST() will convert array to binary search tree  
+            public Node<T> createBST(int start, int end)
+            {
+
+                //It will avoid overflow  
+                if (start > end)
+                {
+                    return null;
+                }
+
+                //Variable will store middle element of array and make it root of binary search tree  
+                int mid = (start + end) / 2;
+                Node<T> node = new Node<T>(treeArray[mid]);
+
+                //Construct left subtree  
+                node.left = createBST(start, mid - 1);
+
+                //Construct right subtree  
+                node.right = createBST(mid + 1, end);
+
+                return node;
+            }
+
+            //inorder() will perform inorder traversal on binary search tree  
+            public void inorderTraversal(Node<T> node)
+            {
+
+                //Check whether tree is empty  
+                if (root == null)
+                {
+                    Console.WriteLine("Tree is empty");
+                    return;
+                }
+                else
+                {
+
+                    if (node.left != null)
+                        inorderTraversal(node.left);
+                    Console.Write(node.data + " ");
+                    if (node.right != null)
+                        inorderTraversal(node.right);
+
+                }
+            }
+        }
+
+        public static void Main()
+        {
+            ConvertBTtoBST<int> bt = new ConvertBTtoBST<int>();
+
+            //Add nodes to the binary tree  
+            bt.root = new Node<int>(1);
+            bt.root.left = new Node<int>(2);
+            bt.root.right = new Node<int>(3);
+            bt.root.left.left = new Node<int>(4);
+            bt.root.left.right = new Node<int>(5);
+            bt.root.right.left = new Node<int>(6);
+            bt.root.right.right = new Node<int>(7);
+
+            //Display given binary tree  
+            Console.WriteLine("Inorder representation of binary tree: ");
+            bt.inorderTraversal(bt.root);
+
+            //Converts binary tree to corresponding binary search tree  
+            Node<int> bst = bt.convertBTBST(bt.root);
+
+            //Display corresponding binary search tree  
+            Console.WriteLine("\nInorder representation of resulting binary search tree: ");
+            bt.inorderTraversal(bst);
+            Console.ReadLine();
+        }
+    }
+
+}
+
+
