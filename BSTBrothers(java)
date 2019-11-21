@@ -1,0 +1,135 @@
+{
+//Initial Template for Java
+import java.util.Scanner;
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class Node
+{
+    int data;
+    Node left, right;
+    
+    Node(int key)
+    {
+        data = key;
+        left = right = null;
+    }
+}
+class BST
+{
+     public static Node insert(Node node, int data)
+    {
+     if (node == null)
+     {
+            return (new Node(data));
+    } else 
+        {
+             
+           
+            if (data < node.data)
+            {
+                node.left = insert(node.left, data);
+            } else if (data > node.data) 
+            {
+                node.right = insert(node.right, data);
+            }
+ 
+            
+            return node;
+        }
+    
+    }
+     public static void main (String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        
+        
+        while(t-- > 0)
+        {
+           
+            Node root1 = null;
+            Node root2 = null;
+             int n1 = sc.nextInt();
+             
+            
+             while(n1-- > 0)
+            {
+               int data = sc.nextInt();
+                root1 = insert(root1, data);
+            }
+            
+            int n2 = sc.nextInt();
+             while(n2 -- > 0)
+            {
+               int data = sc.nextInt();
+                root2 = insert(root2, data);
+            }
+            
+            int s = sc.nextInt();
+            
+            GfG gfg = new GfG();
+            System.out.println(gfg.countPairs(root1, root2, s));
+        }
+        
+        
+    }
+}
+
+}
+/*This is a function problem.You only need to complete the function given below*/
+//User function Template for Java
+/*Please note that it's Function problem i.e.
+you need to write your solution in the form of Function(s) only.
+Driver Code to call/invoke your function is mentioned above.*/
+//User function Template for Java
+/*class Node
+{
+    int data;
+    Node left, right;
+    
+    Node(int key)
+    {
+        data = key;
+        left = right = null;
+    }
+    
+}*/
+class GfG
+{
+       public static int countPairs(Node root1, Node root2, int x)
+        {
+     
+
+            //There has to be pair if possible
+
+            if (root1 != null)
+            {
+                int neededValue = x - root1.data;
+
+                //Traverse right BST to find one
+                boolean isFound = foundPair(root2, neededValue);
+                if(isFound)
+                return  1 +countPairs(root1.left, root2, x) + countPairs(root1.right, root2, x);
+                else
+                    return 0 + countPairs(root1.left, root2, x) + countPairs(root1.right, root2, x); 
+
+            }
+            else 
+                return 0;
+        }
+
+        public static boolean foundPair(Node root, int x)
+        {
+            if (root == null)
+                return false;
+
+            if (root.data == x)
+                return true;
+            if (root.data > x)
+                return foundPair(root.left, x);
+            
+            else 
+                return foundPair(root.right, x);
+        }
+}
