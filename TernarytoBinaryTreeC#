@@ -1,0 +1,98 @@
+namespace GG
+{
+    class Node
+    {
+        public char data { get; set; }
+        public Node leftChild { get; set; }
+
+        public Node rightChild { get; set; }
+
+        public Node(char data)
+        {
+            this.data = data;
+            this.leftChild = null;
+            this.rightChild = null;
+        }
+
+        //Preorder Traversal
+
+        public static void Pre(Node root)
+        {
+            if (root == null)
+                return;
+
+            Console.WriteLine(root.data);
+            Pre(root.leftChild);
+            Pre(root.rightChild);
+
+
+        }
+    }
+    class Program
+    {
+        static Stack<Node> stackNode = new Stack<Node>();
+        static void Main(string[] args)
+        {
+            string str = "a?b:c";
+
+            //Node root = new Node(1);
+            //root.leftChild = new Node(2);
+            //root.rightChild = new Node(3);
+            //root.leftChild.leftChild = new Node(4);
+            //root.leftChild.rightChild = new Node(5);
+
+
+            //Node.Pre(root);
+
+
+             Node root = convertExp("a?b?c:d:e", 0);
+
+            //Node lc = lastChild(root.leftChild);
+
+            Node.Pre(root);
+            //lConsole.WriteLine(lc.data);
+            Console.ReadLine();
+
+        }
+
+
+
+        public static Node convertExp(String str, int i)
+        {
+            if (i > str.Length)
+                return null;
+
+            Node node = new Node(str[i]);
+            i++;
+            if (i < str.Length && str[i] == '?')
+                node.leftChild = convertExp(str, i + 1);
+
+            int j = str.IndexOf(lastChild(node.leftChild)?.data ?? node.data);
+
+            if (str.IndexOf(node.data) == j)
+                return node;
+            else
+            {           
+                if (j < str.Length && str[j + 1] == ':')
+                    node.rightChild = convertExp(str, j + 2);
+
+            }
+            return node;
+        }
+        public static Node lastChild(Node root)
+        {
+            if (root != null)
+            {
+                stackNode.Push(root);
+                if (root.leftChild != null)
+                    lastChild(root.leftChild);
+                if (root.rightChild != null)
+                    lastChild(root.rightChild);
+                return stackNode.Peek();
+            }
+            else
+                return null;
+            
+        }
+    }
+}
