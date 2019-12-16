@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DeepCount
+{   
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            object o = new object[] { 1, 2, new object[] { 3, 4, new object[] { 5 } } };
+            Console.WriteLine(Kata.DeepCount(o));
+            Console.ReadLine();
+
+        }
+    }
+
+    public class Kata
+    {
+        public static int DeepCount(object a)
+        {
+            var count = 0;
+            if (a is Array)
+                foreach (var x in (Array)a)
+                {
+                    count++;
+                    count += DeepCount(x);
+                }
+            return count;
+
+        }
+
+        //public static int DeepCount(object[] a)
+        //{
+        //    int count = a.Length;
+        //    for (int i = 0; i < a.Length; i++)
+        //        if (a[i].GetType().IsArray)
+        //            count += Kata.DeepCount(a[i]);
+        //    return coun
+    }
+}
