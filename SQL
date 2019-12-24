@@ -1,0 +1,62 @@
+--------use tempdb;
+
+--------Create table Fruit(
+--------Id int not null,
+--------Name varchar(100) not null,
+--------Color varchar(100) null,
+--------Quantity int Default 1
+
+--------);
+
+
+--------insert into Fruit(Id, Name, color , quantity)
+--------values (1, 'Banana', 'Yellow', 1)
+
+------insert into Fruit
+------values(2, 'Grapes', 'Red', 15);
+
+
+------insert into Fruit(Id, Name)
+------values(3, 'Apples')
+
+----insert into fruit (Id, Name, color, quantity)
+----values(4, 'Apples', 'Red', 10),(5, 'Peaches', 'Green', 7),
+----(6, 'Pineapples', 'Yellow', 5)
+
+
+	
+
+--Select 7 + (6 - Id), Name, 'White', Quantity from Fruit where id > 3
+--order by id desc
+
+--Insert into Fruit(Id, Name, Color, Quantity)
+--	Select 7 + (6 -Id), Name, 'White',Quantity 
+--	From fruit where id > 3
+--	order by id desc
+
+insert into fruit(Id, Name)
+select Convert(int, (Select Max(id) from Fruit)) + a.Id, a.Name + b.Name
+From Fruit a inner join Fruit b
+on a.Id = Convert(int, (Select Max(id) from Fruit)) - b.Id + 1
+order by Convert(int, (Select Max(id) from Fruit)) + b.Id asc;
+
+
+--select Convert(int, (Select Max(id) from Fruit)) + b.Id, a.Name + b.Name
+--From Fruit a inner join Fruit b
+--on a.Id = 9 - b.Id;
+
+select * from Fruit order by Id asc
+
+
+insert into Fruit(Id, Name, color , quantity)
+values (1, 'Banana', 'Yellow', 1)
+
+insert into Fruit
+values(2, 'Grapes', 'Red', 15);
+
+insert into Fruit
+values(3, 'Oranges', 'Orange', 30);
+
+
+
+Truncate table fruit
