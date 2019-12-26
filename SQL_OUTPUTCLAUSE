@@ -1,0 +1,22 @@
+We can Add Output clause with out dml statements.
+
+It returns a copy of data that you have inserted into or deleted from your tables
+
+ You can return that data to a table variable, 
+ a temporary or permanent table, or to the processing application 
+ that’s calls the DML statement. You can then use that data for such purposes as archiving, 
+ confirmation messaging, or other application requirements.
+ 
+ https://www.red-gate.com/simple-talk/sql/learn-sql-server/implementing-the-output-clause-in-sql-server-2008/
+ 
+ 
+ If Object_ID('Books', 'U') is not null,
+drop table dbo.books
+
+
+CREATE TABLE DBO.BOOKS
+(
+	BOOKID INT NOT NULL PRIMARY KEY,
+	BOOKTITLE NVARCHAR(50) NOT NULL,
+	MODIFIEDDATE datetime not null
+);
