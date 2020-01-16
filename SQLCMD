@@ -5,3 +5,26 @@ where TABLE_NAME='tableName'
 https://stackoverflow.com/questions/2087902/sqlserver-08-query-to-list-all-databases-in-an-instance
 
 https://www.sqlshack.com/working-sql-server-command-line-sqlcmd/
+
+select * from sysobjects where name = 'DF_TBL_SyncTable_DEVUK'
+
+look at the xtype column
+
+ 
+
+C = CHECK constraint
+D = Default or DEFAULT constraint
+F = FOREIGN KEY constraint
+L = Log
+FN = Scalar function
+IF = Inlined table-function
+P = Stored procedure
+PK = PRIMARY KEY constraint (type is K)
+RF = Replication filter stored procedure
+S = System table
+TF = Table function
+TR = Trigger
+U = User table
+UQ = UNIQUE constraint (type is K)
+V = View
+X = Extended stored procedure
