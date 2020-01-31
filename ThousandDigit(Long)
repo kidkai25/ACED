@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ThousandDigit
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.SetIn(new StreamReader(@"E:\testInput\Input.txt"));
+            Console.SetOut(new StreamWriter(@"E:\testInput\Output.txt") { AutoFlush = true});
+
+            const int WINDOW = 13;
+
+            string str = Console.ReadLine();
+
+            char[] ch = str.ToCharArray();
+
+            int sp = 0;
+            int fp = sp + WINDOW;
+            long maxProduct = 0;
+
+            
+            while(fp != ch.Length - 1) {
+                var currentList = ch
+                             .Where((c, i) => i >= sp && i < fp)
+                             .Select(x => (long)Char.GetNumericValue(x)).ToList();
+
+
+                var currentProduct = currentList
+                             .Aggregate((p, cc) => cc * p);
+
+
+                if(maxProduct <= currentProduct)
+                    maxProduct = currentProduct;
+
+                sp++;
+                fp = sp + WINDOW;
+            }
+
+
+            Console.WriteLine(maxProduct);
+          
+
+            //foreach (var x in List)
+            //    Console.WriteLine(x);
+
+
+
+
+        }
+    }
+}
