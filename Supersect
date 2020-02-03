@@ -1,0 +1,23 @@
+ static class supersect
+    {
+        public static IEnumerable<T> Supersect<T>(this IEnumerable<T> a, List<T> b)
+            => a.Where(t => b.Remove(t));
+    }
+    
+    
+    //
+    
+                //var l1 = new List<int> { 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 5 };
+            //var l2 = new List<int> { 1, 1, 2, 3, 3, 4, 4 };
+
+
+            //ILookup<int, int> lookup1 = l1.ToLookup(i => i);
+            //ILookup<int, int> lookup2 = l2.ToLookup(i => i);
+
+            //int[] result = (from group1 in lookup1
+            //                let group2 = lookup2[group1.Key]
+            //                where group2.Any()
+            //                let smallerGroup = group1.Count() < group2.Count() ? group1 : group2
+            //                from i in smallerGroup
+            //                select i
+            //                  ).ToArray();
