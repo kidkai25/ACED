@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace GB
+{
+    class Book
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Genre { get; set; }
+        public bool IsFiction { get; set; }
+
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+
+            Stopwatch stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+          
+            string numbers = "";
+            for (int i = 0; i < 1000; i++)
+            {
+                numbers += i;
+            }
+
+            stopwatch.Stop();
+
+            Console.WriteLine("Time Elapsed: {0}", stopwatch.Elapsed);
+
+            stopwatch.Reset();
+            stopwatch.Start();
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                sb.Append(i);
+            }
+            //Console.WriteLine(sb.ToString());
+
+            stopwatch.Stop();
+            Console.WriteLine("Time Elapsed: {0}", stopwatch.Elapsed);
+
+
+            Console.ReadLine();
+
+        }
+    }
+}
