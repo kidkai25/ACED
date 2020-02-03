@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GB
+{
+    class Book
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Genre { get; set; }
+        public bool IsFiction { get; set; }
+
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            IEnumerable<Book> books = new List<Book> {
+
+                new Book
+                {
+                   Title= "Sphere",
+                   Author= "Micheal Crichton",
+                   Genre = "ScienceFiction",
+                   IsFiction = true
+                },
+                new Book
+                {
+                    Title = "Jurassic Park",
+                    Author = "Micheal Crichton",
+                    Genre = "ScienceFiction",
+                    IsFiction = true
+                },
+                new Book
+                {
+                    Title = "Working Effectively with Legacy Code",
+                    Author = "Micheal Feathers",
+                    Genre = "Technical",
+                    IsFiction = false
+                },
+                new Book
+                {
+                    Title = "Your Code as a Crime Scene",
+                    Author = "Adam Tornhill",
+                    Genre = "Technical",
+                    IsFiction = false
+                },
+                new Book{
+                    Title =  "Software Design X-Rays",
+                    Author =  "Adam Tornhill",
+                    Genre = "Technical",
+                    IsFiction = false
+                }
+            };
+
+            var bG = books.GroupBy(b => b.Author, b => b.Title, (k, v) => new
+            {
+                Author = k,
+                books = v    
+            });
+
+           
+
+
+            Console.ReadLine();
+
+        }
+    }
+}
