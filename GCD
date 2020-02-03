@@ -1,0 +1,9 @@
+static int GreatestCommonDivisor(int[] numbers)
+{
+    return numbers.Aggregate(GCD);
+}
+
+static int GreatestCommonDivisor(int x, int y)
+{
+return y == 0 ? x : GreatestCommonDivisor(y, x % y);
+}
