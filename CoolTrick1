@@ -1,0 +1,4 @@
+var digits = Array.ConvertAll(Console.ReadLine().ToCharArray(), (a) => Convert.ToInt64("" + a));
+
+
+//Characters here are converted back to string to get the right value when we do sum
