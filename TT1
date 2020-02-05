@@ -1,0 +1,14 @@
+int t = int.Parse(Console.ReadLine());
+     int i,j,number; 
+     int[] arr = new int[1000001];
+     for(i = t ; i > 0; i--)
+     {
+         number = int.Parse(Console.ReadLine());
+         arr[number]++; 
+     }
+     for(j = 0; j <= 1000000;j++ )
+       while(arr[j]>0)
+        {
+        Console.WriteLine(j);
+        arr[j]--; 
+        } 
