@@ -2,3 +2,9 @@ var digits = Array.ConvertAll(Console.ReadLine().ToCharArray(), (a) => Convert.T
 
 
 //Characters here are converted back to string to get the right value when we do sum
+
+
+string reverseValue = new string(original.Select((c, index) => new { c, index })
+                                         .OrderByDescending(x => x.index)
+                                         .Select(x => x.c)
+                                         .ToArray());
