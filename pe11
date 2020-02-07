@@ -1,0 +1,137 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Grid
+{
+    class Program
+    {
+        const int LENGTH = 4;
+        static void Main(string[] args)
+        {
+            //int[,] grid = new int[20, 20];
+            var codes = new int[20, 20];
+
+
+
+
+            Console.SetIn(new StreamReader(@"C:\Users\Abdul\source\repos\Grid\Grid\test.txt"));
+            Console.SetOut(new StreamWriter(@"C:\Users\Abdul\source\repos\Grid\Grid\out.txt") { AutoFlush = true });
+            //Console.SetOut(Console.Out);
+            int bound0 = codes.GetUpperBound(0);
+            int bound1 = codes.GetUpperBound(1);
+
+            for(int i = 0; i<=bound0; i++)
+            {
+                string input = Console.ReadLine();
+                for (int x = 0; x <= bound1; x++)
+                {
+                    codes[i, x] = int.Parse(input.Split()[x].Trim());
+                    Console.Write(codes[i, x].ToString().PadRight(2) + " ");
+                } 
+
+                Console.WriteLine();
+            }
+
+            //Method to Call
+            var result = call(codes);
+            Console.WriteLine("Answer is- {0} ", result);
+            Console.ReadLine();
+            
+        }
+
+        static long call(int[,] arr)
+        {
+            // 0 1 0
+            // 1 x 1
+            // 0 1 0
+
+            //Direction Up (0, -1) 
+            //Direction Down (0, +1)
+            //Direction Right (+1, 0)
+            //Direction Left (-1, 0)
+            //Direction Diagona1 (-1,-1)
+            //Direction Diagonal2 (+1, -1)
+            //Direction Diagonal3 (+1, +1)
+            //Direction Diagonal4 (-1, +1)
+
+            //Get upper bound again
+            int bound0 = arr.GetUpperBound(0);
+            int bound1 = arr.GetUpperBound(1);
+
+            ///////4//////////
+            //             //
+            //            // Energy is 4
+            ///////////////
+            long max = 1;
+            List<long> l1 = new List<long>();
+
+            for (int x = 0; x <= bound0; x++)
+            {
+                for(int y = 0; y<=bound1;y++)
+                {
+
+                    //if(arr[x,y] == 26) { 
+                    long p1 = 1, p2 = 1, p3 = 1, p4 = 1;
+                    long p5 = 1, p6 = 1, p7 = 1, p8 = 1;
+                  
+
+                    for (int i = 0; i < 3; i++)
+                    {
+
+                        p1 = p1 * getVal(arr, x, y + (1 + i)); //Up
+                        p2 = p2 * getVal(arr, x, y - (1 + i));
+                        p3 = p3 * getVal(arr, x - (1 + i), y);
+                        p4 = p4 * getVal(arr, x + (1 + i), y);
+
+                        //4 diagonals
+
+                        //Direction Diagona1 (-1,-1)
+                        //Direction Diagonal2 (+1, -1)
+                        //Direction Diagonal3 (+1, +1)
+                        //Direction Diagonal4 (-1, +1)
+                        p5 = p5 * getVal(arr, x - (1 + i), y - (1 + i));
+                        p6 = p6 *  getVal(arr, x + (1 + i), y - (1 + i));
+                        p7 = p7 * getVal(arr, x + (1 + i), y + (1 + i));
+                        p8 = p8 * getVal(arr, x - (1 + i), y + 1 + i);
+
+
+                        //max = l1.Max();
+                    }
+
+                        l1.Add(p1 * arr[x, y]);
+                        l1.Add(p2 * arr[x, y]);
+                        l1.Add(p3 * arr[x, y]);
+                        l1.Add(p4 * arr[x, y]);
+                        l1.Add(p5 * arr[x, y]);
+                        l1.Add(p6 * arr[x, y]);
+                        l1.Add(p7 * arr[x, y]);
+                        l1.Add(p8 * arr[x, y]);
+                        l1.Add(max * arr[x, y]);
+                       
+                    ////max = Math.Max(max,Math.Max(p1,Math.Max(p2,Math.Max(p3,Math.Max(p4, Math.Max(p5, Math.Max(p6, Math.Max(p8, p7))))))));
+                    }
+               // }
+            }
+            //I have my point
+
+            //max = l1.Max(z => z * arr[x, y]);
+            max = l1.Max();
+            return max;
+            //Validation (+_+)
+        }
+
+
+        static int getVal(int[,] arr, int x, int y, int k = 0)
+        {
+            if (x > 0 &&  x <= arr.GetUpperBound(0) && (y > 0 && y <= arr.GetUpperBound(1)))
+                return arr[x,y];
+            else
+                return 0;
+
+        }
+    }
+}
