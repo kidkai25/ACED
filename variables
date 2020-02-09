@@ -1,0 +1,6 @@
+Assignment returns value
+
+Hence I can make two assignments within a same statement
+
+string requirements, max;
+requirements = max = "It would take a miracle";
