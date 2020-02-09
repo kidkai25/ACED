@@ -1,0 +1,14 @@
+Class:-
+All code in c# appears within a type definition.
+A program contains multiple types
+and each type containing multiple methods.
+
+Begin with Captial Letter and a noun.
+If multiple words All should be capital.
+
+
+Methods:- A named block code
+Similar to paragraphs written in a Language. 
+They provide means of structuring and organzing code so that it is more readable.
+Methods avoid the need to duplicate code
+
