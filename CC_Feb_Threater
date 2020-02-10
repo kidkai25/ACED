@@ -1,0 +1,195 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ThreaterProblem
+{
+    enum ThreaterEnum
+    {
+        A,
+        B,
+        C,
+        D
+    }
+   
+
+
+
+    class Program
+    {
+        
+        
+        static void Main(string[] args)
+        {
+
+            ////Create a 2d Array
+            //long[,] TR = new long[4, 4];
+
+            ////Get X
+            //long x = TR.GetUpperBound(0);
+            //long y = TR.GetUpperBound(1);
+
+            //Console.WriteLine(Threater.A);
+            //Console.WriteLine((long)Threater.A); //Correct
+
+            long FinalTotal = 0;
+            
+
+            long tc = long.Parse(Console.ReadLine());
+
+
+            while (tc-- > 0)
+            {
+                //Create a 2d Array
+                long[,] TR = new long[4, 4];
+
+                //Get X
+                long x = TR.GetUpperBound(0);
+                long y = TR.GetUpperBound(1);
+
+                //Requests
+                long N = long.Parse(Console.ReadLine());
+
+                while(N-- > 0)
+                { 
+                string RequestInput = Console.ReadLine();
+                string Threater = RequestInput.Split()[0];
+                string Timing = RequestInput.Split()[1];
+
+                
+                //Get Threater
+                long x1 = (int)Enum.Parse(typeof(ThreaterEnum), Threater);
+                //Get Request 
+                long y1 = (long.Parse(Timing) / 3) - 1;
+
+                //Insert in Grid
+                TR[x1, y1] += 1;
+
+                  
+
+                }
+                //Call My Profit Function
+                long result = CalProfit(TR);
+
+                //Check for empty Threaters
+
+                //Console.WriteLine(result);
+
+                FinalTotal += result;
+            }
+
+
+
+            Console.WriteLine("Final Result {0}", FinalTotal);
+            ////Display
+            //for (long i = 0; i <= x; i++)
+            //{
+            //    for (long j = 0; j <= y; j++)
+            //    {
+            //        Console.Write(TR[i, j] + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+          
+
+
+            Console.ReadLine();
+        }
+
+        static long CalProfit(long[,] arr2)
+        {
+            List<long> money = new List<long>() { 100, 75, 50, 25 };
+            long[,] arr = new long[4, 4];
+            Array.Copy(arr2, arr, arr2.LongLength);
+            long Total = 0;
+            //Find max
+            List<bool> Threaters = new List<bool>(4) { false, false, false, false };
+            while (true)
+            {
+                var maxPosition = MaxTR(arr);
+
+                if (!string.IsNullOrEmpty(maxPosition))
+                {
+                    //Calculate
+                    string Threater = maxPosition.Split()[0];
+                    long RequestNum = long.Parse(maxPosition.Split()[1]);
+
+                    if (RequestNum <= 0)
+                        break;
+                    //var T = Threaters[(long)Enum.Parse(typeof(ThreaterEnum), Threater)];
+                    var T = (int)Enum.Parse(typeof(ThreaterEnum), Threater);
+                    if (!Threaters[T])
+                    {
+                        var maxMoney = money.Max();
+                        Total += maxMoney * RequestNum;
+                        Threaters[T] = true;
+                        money.Remove(maxMoney);
+
+                    }
+                }
+            }
+
+
+            //Check for Empty Threaters
+            Total -= Threaters.Where(x => x == false).Count() * 100;
+
+
+            return Total;
+
+        }
+
+        static string MaxTR(long[,] arr)
+        {
+            //Find max
+            var x = arr.Cast<long>().ToArray().Max();
+
+            //Find its position
+            long w = arr.GetLength(0);
+            long h = arr.GetLength(1);
+
+            string finalVal = string.Empty;
+
+            bool found = false;
+
+            for (long i = 0; i < w; ++i)
+            {
+                for (long j = 0; j < h; j++)
+                {
+                    if (arr[i, j] == x)
+                    {
+
+                        //REJECT EVERY
+                        finalVal = i + " " + arr[i, j];
+                        Resetting(arr, i, j);
+                        //arr[i, j] = long.MinValue; //Removing it out
+                        //return i + " " + j;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found)
+                    break;
+            }
+
+            return finalVal;
+        }
+
+
+        static void Resetting(long[,] arr, long x, long y)
+        {
+            for(long i = 0; i < arr.GetLength(0); i++)
+            {
+                arr[x, i] = long.MinValue;
+            }
+
+            for(long i = 0; i < arr.GetLength(1); i++)
+            {
+                arr[i,y] = long.MinValue;
+            }
+        }
+    }
+}
