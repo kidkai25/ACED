@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp110
+{
+    //N denominations
+    //i worth =  Di cents
+
+    //Ticket P cents
+    //No change is given back
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int tc = int.Parse(Console.ReadLine());
+
+            while (tc-- > 0)
+            {
+                string NP = Console.ReadLine();
+
+                long N = int.Parse(NP.Split()[0]);
+                long P = int.Parse(NP.Split()[1]);
+
+                long[] D = Array.ConvertAll(Console.ReadLine().Split(), x => long.Parse(x));
+
+
+                Console.WriteLine(NOCHANGE(N, P, D));
+               
+
+            }
+           
+        }
+
+
+        //N denominations
+        //i worth =  Di cents
+
+        //Ticket P cents
+        //No change is given back
+        private static string NOCHANGE(long N, long P, long[] D)
+        {
+
+            //Always possible or not?
+            bool possible = D.All(x => P % x == 0);
+
+
+            if (possible)
+                return "NO";
+
+            else
+            {
+                //2 4
+                //1 5   0 1
+                //3 25
+                //3 5 10  2 0 2
+
+                ///EASY 
+                ///Attempt
+                ///
+
+                //Get one which is not
+                var thatOneCoin = D.Where(x => ((P % x) != 0)).FirstOrDefault();
+
+                long C = 1;
+                if(P > thatOneCoin) { 
+                    C = (P / thatOneCoin) + 1;
+                }
+               
+
+
+
+                string str = string.Empty;
+                str += "YES";
+
+                D.ToList().ForEach(x =>
+                {
+                    if (x == thatOneCoin)
+                        str += " " + C;
+                    else
+                        str += " " + 0;
+                });
+
+                str.Trim();
+
+                return str;
+            }
+        }
+
+    }
+}
