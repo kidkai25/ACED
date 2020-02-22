@@ -1,0 +1,47 @@
+ASP.Net Core Fundamentals:-
+=====================
+
+Startup class:- The class for putting in the services required by my app. And defining my request handling pipeline.
+
+Services:- The components used by my application. Code to register my service is added in Startup.ConfigureServices method.
+
+Request handling pipeline:- It is composed of a series of middleware components. A middleware might handle request for static files or redirect HTTP requests to HTTPS. Code to register the middleware is added in Startup.Configure method.
+
+Dependency Injection:-
+ASP.NET Core has a built in dependency injection (DI) framework that makes configured services available to an app's classes.
+
+Host:-
+The ASP.Net core app builds a host on startup. The host is an object that encapsulates all of the app's
+resources such as :-
+-An Http server implementation
+-Middleware components
+-Logging
+-DI
+-Configuration
+
+The main reason for including all of the app's interdependent resources in one object is lifetime management: control over app startup and graceful shutdown.
+
+2 hosts are there - The generic Host and the Web Host. The generic one is recommended.
+
+CreateDefaultBuilder and ConfigureWebHostDefaults methods configure a host with commonly used options, such as the following:-
+
+-Use Kestral as the webserver and enable IIS integeration.
+-Load configuration from appsettings.json, appsettings.{EnvironmentName}.json,
+environment variables, command line arguments, and other configuration sources.
+-Send loggin output to the console and debug providers.
+
+
+Servers- An ASP.Net core app uses an HTTP server implementation to listen for HTTP
+requests. The server surfaces requests to the app as a set of request features composed into
+an HTTPContext.
+
+ASP.NET core provides the following server implementations:-
+-Kestral is a cross platform webserver.
+-IIS HTTP server.
+-HTTP.sys
+
+Configuration:- ASP.NET core provides a configuration framework that gets settings as name value pairs from an order set of configuration providers. There are built-in configuration providers for a variety of sources, such as .json files, .xml files, environment variables, and command-line arguments.
+You can also write custom configuration providers.
+
+-Eg, I can specify that configuration comes form appsettings.json and environment variables.
+Then when the value of ConnectionString is requested, the framework looks first in the appsettings.json file. If the value is found there but also in an environment variable, the value from the environment variable would take precedence.
