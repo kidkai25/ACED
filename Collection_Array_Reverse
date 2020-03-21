@@ -1,0 +1,38 @@
+using System;
+using System.Linq;
+using System.Diagnostics;
+
+class Program
+{
+  public static void Main()
+  {
+    int[] array = new int[] { 1,2,3,4,5};
+  }
+}
+
+
+static class MyExtention
+{
+  void ReverseArray<T>(this T[] theArray)
+  {
+    T tempholder = defaut(T);
+    
+    if(theArray == null)
+      throw new Exception("theArray");
+      
+      if(theArray.Length > 0)
+      {
+        for(int counter = 0; counter < (theArray.Length / 2); counter++)
+        {
+          tempHolder = theArray[counter];
+          theArray[counter] = theArray[theArray.Length - 1 - counter];
+          theArray[theArray.Length - counter - 1] = tempHolder;
+        }
+      }
+      else
+      {
+        Trace.WriteLine("Nothing to reverse");
+      }
+      
+  }
+}
