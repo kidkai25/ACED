@@ -1,0 +1,37 @@
+using System;
+using System.Linq;
+
+public class Program
+{
+    public static void Main()
+    {
+        
+        Console.WriteLine("Creating an Array");
+        int[] arr = new int[] { 1, 2, 3, 4, 5 };
+
+        arr.SwapElementsInArray(2, 3);
+
+        var result = String.Join(',', arr);
+
+        Console.WriteLine(result);
+
+    }
+
+}
+
+public static class MyExtentions
+{
+
+    public static void SwapElementsInArray<T>(this T[] theArray, int index1, int index2)
+    {
+        T tempholder = theArray[index1];
+        theArray[index1] = theArray[index2];
+        theArray[index2] = tempholder;
+    }
+
+
+}
+
+
+
+
