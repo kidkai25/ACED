@@ -1,0 +1,63 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace CodeWars
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            var x = ComputeDepth(42);
+
+            Console.WriteLine(x);
+        }     
+
+        public static int ComputeDepth(int n)
+        {
+            List<int> required = new List<int>();
+            HashSet<int> needed = new HashSet<int>();
+            foreach (var multiple in nums())
+            {
+                int val = n * multiple;
+
+                foreach(var digit in GetDigits(val))
+                {
+                    needed.Add(digit);
+                }
+                
+                required.Add(multiple);
+
+                if(needed.Count == 10)
+                {
+                    break;
+                }
+
+            }
+
+            return required.Count;
+        }
+
+        public static IEnumerable<int> nums()
+        {
+            int count = 1;
+            while(true)
+            {
+                yield return count;
+                count++;
+            }
+        }
+
+        public static IEnumerable<int> GetDigits(int n)
+        {
+            while( n >  0)
+            {
+                var digit = n % 10;
+                n /= 10;
+                yield return digit;
+            }
+        }
+
+
+    }
+}
