@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Enumerable.Range(0, 5).ToList().ForEach(x =>
+            //{
+            //    Console.WriteLine(fib(x));
+            //});
+
+            Console.WriteLine(fact_Memoization(6));
+
+                       
+            Console.ReadLine();
+        }
+
+        static int fib(int n)
+        {
+            if (n <= 1)
+                return n;
+            return fib(n - 1) + fib(n - 2);
+        }
+
+        static void fact_Tabulation()
+        {
+            int[] dp = new int[100];
+
+            //Base case
+            dp[0] = 1;
+            int n = 6;
+
+            for (int i = 1; i <= n; i++)
+            {
+                dp[i] = dp[i - 1] * i;
+            }
+
+            Console.WriteLine(string.Join(",", dp));
+
+        }
+
+        static int[] dp = Enumerable.Repeat(-1, 100).ToArray();
+        static int fact_Memoization(int x)
+        {
+
+            if (x == 0)
+                return 1;
+
+            if (dp[x] != -1)
+                return dp[x];
+            return (dp[x] = x * fact_Memoization(x - 1));
+
+        }
+    }
+}
