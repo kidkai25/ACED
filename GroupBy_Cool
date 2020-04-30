@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+					
+public class Program
+{
+	public static void Main()
+	{
+		List<Record> RecordList = new List<Record>()
+		{
+			new Record()
+			{
+				WG_CPD_NR = 1,
+				IND_PLS_NR = 2,
+				Amount1 = 500,
+				Amount2 = 600
+			},
+			new Record()
+			{
+				WG_CPD_NR =51,
+				IND_PLS_NR = 2,
+				Amount1 = 500,
+				Amount2 = 600
+			},	
+			new Record()
+			{
+				WG_CPD_NR = 1,
+				IND_PLS_NR = 3,
+				Amount1 = 500,
+				Amount2 = 600
+			},	
+			new Record()
+			{
+				WG_CPD_NR = 42,
+				IND_PLS_NR = 42,
+				Amount1 = 500,
+				Amount2 = 600
+			},	
+		};
+		
+		var SummarizeList = 
+        RecordList.GroupBy(r => new { r.IND_PLS_NR, r.WG_CPD_NR})
+        .Select(group => new Record
+            {
+                WG_CPD_NR = group.Key.IND_PLS_NR,
+                IND_PLS_NR = group.Key.WG_CPD_NR,
+                Amount1= group.Sum(rec => rec.Amount1),
+                Amount2= group.Sum(rec => rec.Amount2)
+            }).ToList();
+		
+		foreach (var item in SummarizeList)
+		{
+			Console.WriteLine("{0} - {1} - {2} - {3}", item.WG_CPD_NR, item.IND_PLS_NR, item.Amount1, item.Amount2);
+		}
+	}
+}
+
+public class Record
+{
+	public int WG_CPD_NR { set; get; }
+	public int IND_PLS_NR { set; get; }
+	public int Amount1 { set; get; }
+	public int Amount2 { set; get; }
+}
