@@ -1,0 +1,44 @@
+ALTER PROCEDURE uspGetCreditInfoForCustomer
+	@first varchar(40),
+	@last varchar(40),
+    @CreditInfo varchar(200) output
+AS
+BEGIN
+
+	--Declare Variables
+	DECLARE @SalesOrderId int;
+
+
+	--Get the latest sales order header
+	SELECT TOP 1 @SalesOrderId = SOM.SalesOrderID
+	FROM SALES.SalesOrderHeader SOM
+		 INNER JOIN SALES.Customer C ON SOM.CustomerID = C.CustomerID
+		 INNER JOIN PERSON.PERSON P ON P.BusinessEntityID = C.CustomerID
+	WHERE P.FirstName LIKE @first AND P.LastName Like @last
+	ORDER BY SOM.OrderDate DESC;
+	
+	--Get credit card number
+	IF @@ROWCOUNT > 0
+	BEGIN
+	SELECT @CreditInfo = 'Card: '+  CC.CardType + ' - ' +
+						 REPLICATE('*', LEN(CC.CardNumber)-4) + RIGHT(cc.CardNumber,4) +
+						 ' Exp: ' + CAST(CC.ExpYear as varchar(4)) + '-' + Cast(CC.ExpMonth as varchar(2))
+			FROM Sales.CreditCard CC
+			INNER JOIN SALES.SalesOrderHeader SOM on CC.CreditCardID = SOM.CreditCardID
+											  AND SOM.SalesOrderID = @SalesOrderId;
+	END
+	ELSE
+	BEGIN
+		SET @CreditInfo = 'Customer Not Found';
+	END
+END
+
+
+DECLARE @CreditInfo varchar(200);
+DECLARE @First varchar(40);
+Declare @last varchar(40);
+
+EXEC uspGetCreditInfoForCustomer 'KRISTINA', 'GARCIA', @CreditInfo OUTPUT
+
+select @CreditInfo
+
