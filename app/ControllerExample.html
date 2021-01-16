@@ -1,0 +1,32 @@
+<!doctype html>
+<html ng-app="customersApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>AngularJS Controller Example</title>
+    <script src="angular.js"></script>
+    <script src="controllers/app.js"></script>
+    <script src="controllers/customerController.js"></script>
+</head>
+
+<body ng-controller="CustomersController">
+    <h2>Customers</h2>
+    <input type="text" ng-model="customerFilter.name"/>
+    <br>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>City</th> 
+            <th>Order Total</th>
+            <th>Joined</th>
+        </tr>
+        <tr ng-repeat="cust in customers | filter:customerFilter">
+            <td>{{cust.name}}</td>
+            <td>{{cust.city}}</td>
+            <td>{{cust.orderTotal}}</td>
+            <td>{{cust.joined}}</td>
+        </tr>
+    </table>
+    <span>Total Customers: {{customers.length}}</span>
+</body>
+</html>
